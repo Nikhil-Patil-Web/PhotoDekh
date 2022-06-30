@@ -1,33 +1,28 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const mongoose = require('mongoose')
+const dotenv = require('dotenv')
+const { readdirSync } = require('fs')
 
-let allowed = ['http://localhost:3000', 'http://localhost:7000']
-function options(req, res) {
-  let tmp
-  let origin = req.header('Origin')
-  if (allowed.indexOf(origin) > -1) {
-    tmp = {
-      origin: true,
-      optionSuccessStatus: 200,
-    }
-  } else {
-    tmp = {
-      origin: 'stupid',
-    }
-  }
-  res(null, tmp)
-}
-app.use(cors(options))
+dotenv.config()
+app.use(cors())
 
-app.get('/' || '/home', (req, res) => {
-  res.send('Welcome to Home')
-})
+//routes
+readdirSync('./routes').map((r) => app.use('/', require('./routes/' + r)))
 
-app.get('/books', (req, res) => {
-  res.send('hahahahahaha')
-})
+//database connection
 
-app.listen('8000', () => {
-  console.log('Server is listening!!!!!!!')
+mongoose
+  .connect(process.env.DATABASE_URL)
+  .then(() => {
+    console.log('DATABASE CONNECTED SUCCESSFULLY!!!!!')
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+const PORT = process.env.PORT || 8000
+
+app.listen(PORT, () => {
+  console.log(`Server is listening to port ${PORT}!!!!!!!`)
 })
