@@ -61,7 +61,7 @@ const userSchema = mongoose.Schema(
       trim: true,
     },
     verified: {
-      type: Number,
+      type: Boolean,
       default: false,
     },
     friends: {
