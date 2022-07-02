@@ -1,8 +1,29 @@
 import './style.css'
 import { Formik, Form } from 'formik'
 import { Link } from 'react-router-dom'
+import LogInInput from '../../components/inputs/logininputs'
+import { useState } from 'react'
+import * as Yup from 'yup'
+
+const loginInfos = {
+  email: '',
+  password: '',
+}
 
 export default function Login() {
+  const [login, setLogin] = useState(loginInfos)
+  const { email, password } = login
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target
+    setLogin({ ...login, [name]: value })
+  }
+  const loginValidation = Yup.object({
+    email: Yup.string()
+      .required('Email address is required')
+      .email('Must be a valid email')
+      .max(100),
+    password: Yup.string().required('Password is a required field'),
+  })
   return (
     <div className='login'>
       <div className='login_wrapper'>
@@ -15,17 +36,33 @@ export default function Login() {
           </div>
           <div className='login_2'>
             <div className='login_2_wrap'>
-              <Formik>
+              <Formik
+                enableReinitialize
+                initialValues={{ email, password }}
+                validationSchema={loginValidation}
+              >
                 {(formik) => (
                   <Form>
-                    <input type='text' />
-                    <input type='text' />
+                    <LogInInput
+                      type='text'
+                      name='email'
+                      placeholder='Email address or phone number'
+                      onChange={handleLoginChange}
+                    ></LogInInput>
+                    <LogInInput
+                      type='password'
+                      name='password'
+                      placeholder='Password'
+                      onChange={handleLoginChange}
+                      bottom
+                    ></LogInInput>
                     <button type='submit' className='blue_btn'>
                       Login
                     </button>
                   </Form>
                 )}
               </Formik>
+
               <Link to='/forgot' className='forgot_password'>
                 Forgotten Password
               </Link>
@@ -33,8 +70,7 @@ export default function Login() {
               <button className='blue_btn open_signup'>Create Account</button>
             </div>
             <Link to='/' className='sign_extra'>
-              <b>Create a page</b>
-              for a celebrity, brand, or business
+              <b>Create a page</b> for a celebrity, brand, or business.
             </Link>
           </div>
         </div>
