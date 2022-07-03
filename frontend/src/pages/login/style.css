@@ -243,7 +243,16 @@
 }
 
 /*-----------FOOOTER-------*/
+.reg_grid .input_error {
+  width: 300px;
+  position: absolute;
+  top: 65px;
+}
 
+.input_error_select_large {
+  left: -97%;
+  top: 14px !important;
+}
 /* --------media queries--------*/
 
 @media (min-width: 539px) {
@@ -259,6 +268,10 @@
   .reg_grid select,
   .reg_grid label {
     width: 110px;
+  }
+
+  .reg_grid .input_error {
+    width: 350px;
   }
 }
 
