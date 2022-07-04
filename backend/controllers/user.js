@@ -140,7 +140,6 @@ exports.login = async (req, res) => {
       last_name: user.last_name,
       token: token,
       verified: user.verified,
-      message: 'Your user login is successful',
     })
   } catch (error) {
     res.status(500).json({ error: error.message })
