@@ -243,6 +243,7 @@
 }
 
 /*-----------FOOOTER-------*/
+/*-------DOB AND GENDER ERROR-------*/
 .reg_grid .input_error {
   width: 300px;
   position: absolute;
@@ -252,6 +253,15 @@
 .input_error_select_large {
   left: -97%;
   top: 14px !important;
+}
+/*---------DOB AND GENDER ERROR--------*/
+
+/*---------ERROR AND SUCCESS STYLES-------*/
+.error_text {
+  color: #b94a48;
+}
+.success_text {
+  color: var(--green-color);
 }
 /* --------media queries--------*/
 

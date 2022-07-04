@@ -4,8 +4,15 @@ import RegisterInput from '../inputs/registerinputs'
 import * as Yup from 'yup'
 import DateOfBirthSelect from './DateOfBirthSelect'
 import GenderSelect from './GenderSelect'
+import DotLoader from 'react-spinners/DotLoader'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
 
 export default function Register() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const userInfos = {
     first_name: '',
     last_name: '',
@@ -72,6 +79,35 @@ export default function Register() {
 
   const [dateError, setDateError] = useState('')
   const [genderError, setGenderError] = useState('')
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const [loading, setLoading] = useState(false)
+  const registerSubmit = async () => {
+    try {
+      const { data } = await axios.post(`http://localhost:8000/register`, {
+        first_name,
+        last_name,
+        email,
+        password,
+        bYear,
+        bMonth,
+        bDay,
+        gender,
+      })
+      setError('')
+      setSuccess(data.message)
+      const { message, ...rest } = data
+      setTimeout(() => {
+        dispatch({ type: 'LOGIN', payload: rest })
+      }, 2000)
+      Cookies.set('user', JSON.stringify(rest))
+      navigate('/')
+    } catch (error) {
+      setLoading(false)
+      setSuccess('')
+      setError(error.response.data.message)
+    }
+  }
 
   return (
     <div className='blur'>
@@ -115,6 +151,7 @@ export default function Register() {
             } else {
               setDateError('')
               setGenderError('')
+              registerSubmit()
             }
           }}
         >
@@ -184,6 +221,13 @@ export default function Register() {
               <div className='reg_btn_wrapper'>
                 <button className='blue_btn open_signup'>Sign Up</button>
               </div>
+              <DotLoader
+                color='#1876f2'
+                loading={loading}
+                size={30}
+              ></DotLoader>
+              {error && <div className='error_text'>{error}</div>}
+              {success && <div className='success_text'>{success}</div>}
             </Form>
           )}
         </Formik>
