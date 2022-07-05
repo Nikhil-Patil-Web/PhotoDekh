@@ -11,7 +11,6 @@ export default function Home() {
   return (
     <div>
       <Header></Header>
-      {visible && <div className='card' ref={el}></div>}
     </div>
   )
 }
