@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux'
 import Header from '../../components/header'
 import LeftHome from '../../components/home/left'
 import RightHome from '../../components/home/right'
+import Stories from '../../components/home/stories'
 import useClickOutside from '../../helpers/clickOutside'
+import './style.css'
 
 export default function Home() {
   const [visible, setVisible] = useState(true)
@@ -13,9 +15,12 @@ export default function Home() {
     setVisible(false)
   })
   return (
-    <div>
+    <div className='home'>
       <Header></Header>
       <LeftHome user={user}></LeftHome>
+      <div className='home_middle'>
+        <Stories></Stories>
+      </div>
       <RightHome user={user}></RightHome>
     </div>
   )
