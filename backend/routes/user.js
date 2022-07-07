@@ -9,7 +9,7 @@ const {
 const { authUser } = require('../middlewares/auth')
 
 router.post('/register', register)
-router.post('/activate', activateAccount)
+router.post('/activate', authUser, activateAccount)
 router.post('/login', login)
 
 module.exports = router

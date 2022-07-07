@@ -49,7 +49,13 @@ export default function Activate() {
         navigate('/')
       }, 3000)
     } catch (error) {
-      setError(error.response.data.error)
+      console.log(error.response.data)
+      {
+        error.response.data.message && setError(error.response.data.message)
+      }
+      {
+        error.response.data.error && setError(error.response.data.error)
+      }
       setTimeout(() => {
         navigate('/')
       }, 3000)
