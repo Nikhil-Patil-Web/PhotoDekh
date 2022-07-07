@@ -15,6 +15,7 @@ export default function Home() {
   useClickOutside(el, () => {
     setVisible(false)
   })
+
   return (
     <div className='home'>
       <Header></Header>

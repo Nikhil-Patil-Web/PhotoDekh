@@ -33,7 +33,7 @@ export default function Stories() {
         <div className='story_create_text'>Create Story</div>
       </div>
       {stories.slice(0, max).map((story, i) => (
-        <Story story={story}></Story>
+        <Story story={story} key={i}></Story>
       ))}
       <div className='white_circle'>
         <ArrowRight color='#65676b'></ArrowRight>
