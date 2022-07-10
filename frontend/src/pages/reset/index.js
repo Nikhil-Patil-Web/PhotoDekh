@@ -10,12 +10,12 @@ import CodeVerify from './CodeVerify'
 import Footer from '../../components/login/Footer'
 import ChangePassword from './ChangePassword'
 export default function Reset() {
-  const { email, setEmail } = useState('')
-  const { error, setError } = useState('')
+  const [email, setEmail] = useState('')
+  const [error, setError] = useState('')
   const [visible, setVisible] = useState(3)
-  const { password, setPassword } = useState('')
-  const { conf_password, setConf_password } = useState('')
-  const { code, setCode } = useState('')
+  const [password, setPassword] = useState('')
+  const [conf_password, setConf_password] = useState('')
+  const [code, setCode] = useState('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const logout = () => {

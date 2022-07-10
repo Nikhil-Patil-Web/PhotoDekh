@@ -41,7 +41,7 @@ a {
 .blue_btn {
   border: none;
   outline: none;
-  padding: 8.5px, 12px;
+  padding: 8.5px 12px;
   background: var(--blue-color);
   border-radius: 7px;
   font-family: inherit;
@@ -58,7 +58,7 @@ a {
 .gray_btn {
   border: none;
   outline: none;
-  padding: 8.5px, 12px;
+  padding: 8.5px 12px;
   background: var(--bg-secondary);
   border-radius: 7px;
   font-family: inherit;
