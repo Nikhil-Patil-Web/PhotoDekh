@@ -79,7 +79,13 @@ export default function Reset() {
             user={user}
             code={code}
             setCode={setCode}
+            userInfos={userInfos}
             error={error}
+            loading={loading}
+            setError={setError}
+            setLoading={setLoading}
+            setUserInfos={setUserInfos}
+            setVisible={setVisible}
           ></CodeVerify>
         )}
         {visible === 3 && (

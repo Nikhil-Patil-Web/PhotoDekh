@@ -17,6 +17,7 @@ export default function SearchEmail({
       await axios.post('http://localhost:8000/sendResetPasswordCode', { email })
       setError('')
       setVisible(2)
+      setLoading(false)
     } catch (error) {
       setLoading(false)
       setError(error.response.data.message)
