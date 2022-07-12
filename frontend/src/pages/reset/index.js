@@ -9,10 +9,13 @@ import SearchEmail from './SearchEmail'
 import CodeVerify from './CodeVerify'
 import Footer from '../../components/login/Footer'
 import ChangePassword from './ChangePassword'
+
 export default function Reset() {
   const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [userInfos, setUserInfos] = useState('')
   const [error, setError] = useState('')
-  const [visible, setVisible] = useState(3)
+  const [visible, setVisible] = useState(0)
   const [password, setPassword] = useState('')
   const [conf_password, setConf_password] = useState('')
   const [code, setCode] = useState('')
@@ -27,6 +30,7 @@ export default function Reset() {
   }
 
   const { user } = useSelector((state) => ({ ...state }))
+  console.log(userInfos)
   return (
     <div className='reset'>
       <div className='reset_header'>
@@ -52,9 +56,24 @@ export default function Reset() {
             email={email}
             setEmail={setEmail}
             error={error}
+            setError={setError}
+            setLoading={setLoading}
+            setUserInfos={setUserInfos}
+            setVisible={setVisible}
           ></SearchAccount>
         )}
-        {visible === 1 && <SearchEmail user={user}></SearchEmail>}
+        {visible === 1 && userInfos && (
+          <SearchEmail
+            userInfos={userInfos}
+            error={error}
+            loading={loading}
+            email={email}
+            setError={setError}
+            setLoading={setLoading}
+            setUserInfos={setUserInfos}
+            setVisible={setVisible}
+          ></SearchEmail>
+        )}
         {visible === 2 && (
           <CodeVerify
             user={user}
