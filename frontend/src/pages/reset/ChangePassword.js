@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import LogInInput from '../../components/inputs/logininputs'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
+import axios from 'axios'
 
 export default function ChangePassword({
   password,
@@ -10,7 +11,14 @@ export default function ChangePassword({
   setPassword,
   setConf_password,
   error,
+  setError,
+  setLoading,
+  setVisible,
+  userInfos,
+  loading,
 }) {
+  const navigate = useNavigate()
+
   const validatePassword = Yup.object({
     password: Yup.string()
       .required(
@@ -22,6 +30,23 @@ export default function ChangePassword({
       .required('Please confirm your password')
       .oneOf([Yup.ref('password')], 'Passwords must match'),
   })
+  const { email } = userInfos
+
+  const changePassword = async () => {
+    try {
+      setLoading(true)
+      await axios.post('http://localhost:8000/changePassword', {
+        email,
+        password,
+      })
+      setError('')
+      setLoading(false)
+      navigate('/')
+    } catch (error) {
+      setLoading(false)
+      setError(error.respnse.data.message)
+    }
+  }
 
   return (
     <div className='reset_form' style={{ height: '320px' }}>
@@ -34,6 +59,9 @@ export default function ChangePassword({
           conf_password,
         }}
         validationSchema={validatePassword}
+        onSubmit={() => {
+          changePassword()
+        }}
       >
         {(formik) => (
           <Form>
