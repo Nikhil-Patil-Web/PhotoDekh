@@ -41,7 +41,11 @@ export default function CreatePostPopup({ user }) {
             ></EmojiPickerBackgrounds>
           </>
         ) : (
-          <ImagePreview></ImagePreview>
+          <ImagePreview
+            text={text}
+            setText={setText}
+            user={user}
+          ></ImagePreview>
         )}
         <AddToYourPost></AddToYourPost>
         <button className='post_submit'>Post</button>
