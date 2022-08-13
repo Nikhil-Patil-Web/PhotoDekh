@@ -9,26 +9,18 @@ import Stories from '../../components/home/stories'
 import useClickOutside from '../../helpers/clickOutside'
 import './style.css'
 
-export default function Home() {
-  const [visible, setVisible] = useState(true)
-  const { user } = useSelector((user) => ({ ...user }))
-  const el = useRef(null)
-  useClickOutside(el, () => {
-    setVisible(false)
-  })
-
+export default function Home({ setVisible }) {
+  const { user } = useSelector((state) => ({ ...state }))
   return (
     <div className='home'>
-      <Header></Header>
-      <LeftHome user={user}></LeftHome>
+      <Header />
+      <LeftHome user={user} />
       <div className='home_middle'>
-        <Stories></Stories>
-        {user.verified === false && (
-          <SendVerification user={user}></SendVerification>
-        )}
-        <CreatePost user={user}></CreatePost>
+        <Stories />
+        {user.verified === false && <SendVerification user={user} />}
+        <CreatePost user={user} setVisible={setVisible} />
       </div>
-      <RightHome user={user}></RightHome>
+      <RightHome user={user} />
     </div>
   )
 }

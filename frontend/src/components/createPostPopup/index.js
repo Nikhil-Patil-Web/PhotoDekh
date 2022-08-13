@@ -5,20 +5,30 @@ import './style.css'
 import EmojiPickerBackgrounds from './EmojiPickerBackgrounds'
 import AddToYourPost from './AddToYourPost'
 import ImagePreview from './ImagePreview'
+import useClickOutside from '../../helpers/clickOutside'
 
-export default function CreatePostPopup({ user }) {
+export default function CreatePostPopup({ user, setVisible }) {
+  const popup = useRef(null)
   const [text, setText] = useState('')
   const [userDetails, setUserDetails] = useState(true)
   const [showPrev, setShowPrev] = useState(true)
   const [images, setImages] = useState([])
+  useClickOutside(popup, () => {
+    setVisible(false)
+  })
 
   if (userDetails) {
     return (
       <div className='blur'>
-        <div className='postBox'>
+        <div className='postBox' ref={popup}>
           <div className='box_header'>
             <div className='small_circle'>
-              <i className='exit_icon'></i>
+              <i
+                className='exit_icon'
+                onClick={() => {
+                  setVisible(false)
+                }}
+              ></i>
             </div>
             <span>Create Post</span>
           </div>
