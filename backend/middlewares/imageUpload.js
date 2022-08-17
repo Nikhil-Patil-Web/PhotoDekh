@@ -6,7 +6,6 @@ module.exports = async function (req, res, next) {
     }
     let files = Object.values(req.files).flat()
     files.forEach((file) => {
-      console.log(file.mimetype)
       if (
         file.mimetype !== 'image/jpeg' &&
         file.mimetype !== 'image/png' &&

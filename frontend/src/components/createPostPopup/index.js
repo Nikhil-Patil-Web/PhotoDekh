@@ -11,8 +11,9 @@ export default function CreatePostPopup({ user, setVisible }) {
   const popup = useRef(null)
   const [text, setText] = useState('')
   const [userDetails, setUserDetails] = useState(true)
-  const [showPrev, setShowPrev] = useState(true)
+  const [showPrev, setShowPrev] = useState(false)
   const [images, setImages] = useState([])
+  const [background, setBackground] = useState('')
   useClickOutside(popup, () => {
     setVisible(false)
   })
@@ -52,6 +53,8 @@ export default function CreatePostPopup({ user, setVisible }) {
                 text={text}
                 setText={setText}
                 user={user}
+                setBackground={setBackground}
+                background={background}
               ></EmojiPickerBackgrounds>
             </>
           ) : (
