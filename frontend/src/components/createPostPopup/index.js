@@ -9,6 +9,8 @@ import useClickOutside from '../../helpers/clickOutside'
 import { createPost } from '../../functions/post'
 import PulseLoader from 'react-spinners/PulseLoader'
 import PostError from './PostError'
+import dataURItoBlob from '../../helpers/dataURItoBlob'
+import { uploadImages } from '../../functions/uploadImages'
 
 export default function CreatePostPopup({ user, setVisible }) {
   const popup = useRef(null)
@@ -16,7 +18,7 @@ export default function CreatePostPopup({ user, setVisible }) {
   const [userDetails, setUserDetails] = useState(true)
   const [showPrev, setShowPrev] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('ASASASAS')
+  const [error, setError] = useState('')
   const [images, setImages] = useState([])
   const [background, setBackground] = useState('')
   useClickOutside(popup, () => {
@@ -42,6 +44,43 @@ export default function CreatePostPopup({ user, setVisible }) {
       } else {
         setError(response)
       }
+    } else if (images && images.length) {
+      setLoading(true)
+      console.log('here in images function')
+      const postImages = images.map((img) => {
+        return dataURItoBlob(img)
+      })
+      const path = `${user.usrname}/post Images`
+      let formData = new FormData()
+      formData.append('path', path)
+      postImages.forEach((image) => {
+        formData.append('file', image)
+      })
+      const response = await uploadImages(formData, path, user?.token)
+      await createPost(null, null, text, response, user?.id, user?.token)
+      setLoading(false)
+      setText('')
+      setImages('')
+      setVisible(false)
+    } else if (text) {
+      setLoading(true)
+      const response = await createPost(
+        null,
+        background,
+        text,
+        null,
+        user?.id,
+        user?.token
+      )
+      if (response === 'ok') {
+        setBackground('')
+        setText('')
+        setVisible(false)
+      } else {
+        setError(response)
+      }
+    } else {
+      console.log('Nothing')
     }
   }
 
