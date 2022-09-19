@@ -468,9 +468,10 @@
   justify-content: center;
   gap: 10px;
   color: #b94048;
-  z-index: 1;
+  z-index: 999;
   border-radius: 5px;
   animation: anim 0.3s;
+  padding: 3rem;
 }
 
 @keyframes anim {
@@ -480,4 +481,9 @@
   100% {
     width: 100%;
   }
+}
+
+.postError_error {
+  width: 75%;
+  font-weight: 600;
 }

@@ -50,18 +50,23 @@ export default function CreatePostPopup({ user, setVisible }) {
       const postImages = images.map((img) => {
         return dataURItoBlob(img)
       })
-      const path = `${user.usrname}/post Images`
+      const path = `${user.username}/post Images`
       let formData = new FormData()
       formData.append('path', path)
       postImages.forEach((image) => {
         formData.append('file', image)
       })
       const response = await uploadImages(formData, path, user?.token)
-      await createPost(null, null, text, response, user?.id, user?.token)
+
+      const res = await createPost(text, response, user?.id, user?.token)
       setLoading(false)
-      setText('')
-      setImages('')
-      setVisible(false)
+      if (res === 'ok') {
+        setText('')
+        setImages('')
+        setVisible(false)
+      } else {
+        setError(res)
+      }
     } else if (text) {
       setLoading(true)
       const response = await createPost(
@@ -132,6 +137,8 @@ export default function CreatePostPopup({ user, setVisible }) {
               images={images}
               setImages={setImages}
               setShowPrev={setShowPrev}
+              setError={setError}
+              error={error}
             ></ImagePreview>
           )}
           <AddToYourPost setShowPrev={setShowPrev}></AddToYourPost>
